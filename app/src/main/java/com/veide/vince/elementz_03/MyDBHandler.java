@@ -15,11 +15,13 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_PHONE = "phone";
+    private static final String COLUMN_BIRTHDAY = "birthday";
+    private static final String COLUMN_BIRTHMONTH = "birthmonth";
+    private static final String COLUMN_BIRTHYEAR = "birthyear";
 
     public MyDBHandler(Context context, String name,
                        SQLiteDatabase.CursorFactory factory, int version){
         super(context, "contactDB.db", factory, 1);
-
     }
 
     public void addContact(Contact contact){
@@ -27,6 +29,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, contact.getName());
         values.put(COLUMN_EMAIL, contact.getEmail());
         values.put(COLUMN_PHONE, contact.getPhone());
+        values.put(COLUMN_BIRTHDAY, contact.getBirthDay());
+        values.put(COLUMN_BIRTHMONTH, contact.getBirthMonth());
+        values.put(COLUMN_BIRTHYEAR, contact.getBirthYear());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_CONTACT, null, values);
@@ -47,6 +52,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
             contact.setName(cursor.getString(1));
             contact.setEmail(cursor.getString(2));
             contact.setPhone(cursor.getString(3));
+            contact.setBirthDay(Integer.parseInt(cursor.getString(4)));
+            contact.setBirthMonth(Integer.parseInt(cursor.getString(5)));
+            contact.setBirthYear(Integer.parseInt(cursor.getString(6)));
             cursor.close();
         } else{
             contact = null;
@@ -64,7 +72,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_EMAIL + " TEXT, " +
-                COLUMN_PHONE + " TEXT )";
+                COLUMN_PHONE + " TEXT, " +
+                COLUMN_BIRTHDAY + " INTEGER, " +
+                COLUMN_BIRTHMONTH + " INTEGER, " +
+                COLUMN_BIRTHYEAR + " INTEGER )";
         db.execSQL(CREATE_CONTACT_TABLE);
     }
 
