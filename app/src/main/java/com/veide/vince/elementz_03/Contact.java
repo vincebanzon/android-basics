@@ -8,7 +8,7 @@ import java.util.Date;
 public class Contact {
 
     private String name, email, phone;
-    private String picture;
+    private byte[] image;
     private int birthDay, birthMonth, birthYear;
 
     public Contact(){
@@ -17,34 +17,30 @@ public class Contact {
     }
 
     public Contact(String name, String email, String phone,
-                   int birthDay, int birthMonth, int birthYear){
+                   int birthDay, int birthMonth, int birthYear,
+                   byte[] image){
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.birthDay = birthDay;
         this.birthMonth = birthMonth;
         this.birthYear = birthYear;
+        this.image = image;
     }
 
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    public void setPhone(String phone) { this.phone = phone; }
     public void setBirthDay(int birthDay) { this.birthDay = birthDay; }
     public void setBirthMonth(int birthMonth) { this.birthMonth = birthMonth; }
     public void setBirthYear(int birthYear) { this.birthYear = birthYear; }
+    public void setImage(byte[] image) { this.image = image; }
 
-    public String getName() {
-        return name;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public String getPhone() {
-        return phone;
-    }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public String getPhone() { return phone; }
     public int getBirthDay() { return birthDay; }
     public int getBirthMonth() { return birthMonth; }
     public int getBirthYear() { return birthYear; }
+    public byte[] getImage() { return image; }
 }
