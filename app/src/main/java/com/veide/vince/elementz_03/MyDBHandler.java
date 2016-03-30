@@ -52,9 +52,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
             contact.setName(cursor.getString(1));
             contact.setEmail(cursor.getString(2));
             contact.setPhone(cursor.getString(3));
-            contact.setBirthDay(Integer.parseInt(cursor.getString(4)));
-            contact.setBirthMonth(Integer.parseInt(cursor.getString(5)));
-            contact.setBirthYear(Integer.parseInt(cursor.getString(6)));
+            contact.setBirthDay(cursor.getInt(4));
+            contact.setBirthMonth(cursor.getInt(5));
+            contact.setBirthYear(cursor.getInt(6));
             cursor.close();
         } else{
             contact = null;
