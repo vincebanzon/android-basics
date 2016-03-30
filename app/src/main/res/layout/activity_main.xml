@@ -4,7 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.veide.vince.elementz_03.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="68dp"
+        android:id="@+id/imageButton"
+        android:onClick="camera"
+        android:layout_weight="0.13" />
 
     <EditText
         android:layout_width="match_parent"

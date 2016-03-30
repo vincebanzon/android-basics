@@ -18,6 +18,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_BIRTHDAY = "birthday";
     private static final String COLUMN_BIRTHMONTH = "birthmonth";
     private static final String COLUMN_BIRTHYEAR = "birthyear";
+    private static final String COLUMN_IMAGE = "image";
 
     public MyDBHandler(Context context, String name,
                        SQLiteDatabase.CursorFactory factory, int version){
@@ -32,6 +33,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_BIRTHDAY, contact.getBirthDay());
         values.put(COLUMN_BIRTHMONTH, contact.getBirthMonth());
         values.put(COLUMN_BIRTHYEAR, contact.getBirthYear());
+        values.put(COLUMN_IMAGE, contact.getImage());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_CONTACT, null, values);
@@ -52,9 +54,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
             contact.setName(cursor.getString(1));
             contact.setEmail(cursor.getString(2));
             contact.setPhone(cursor.getString(3));
-            contact.setBirthDay(Integer.parseInt(cursor.getString(4)));
-            contact.setBirthMonth(Integer.parseInt(cursor.getString(5)));
-            contact.setBirthYear(Integer.parseInt(cursor.getString(6)));
+            contact.setBirthDay(cursor.getInt(4));
+            contact.setBirthMonth(cursor.getInt(5));
+            contact.setBirthYear(cursor.getInt(6));
+            contact.setImage(cursor.getBlob(7));
             cursor.close();
         } else{
             contact = null;
@@ -75,7 +78,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 COLUMN_PHONE + " TEXT, " +
                 COLUMN_BIRTHDAY + " INTEGER, " +
                 COLUMN_BIRTHMONTH + " INTEGER, " +
-                COLUMN_BIRTHYEAR + " INTEGER )";
+                COLUMN_BIRTHYEAR + " INTEGER," +
+                COLUMN_IMAGE + " BLOB )";
         db.execSQL(CREATE_CONTACT_TABLE);
     }
 
