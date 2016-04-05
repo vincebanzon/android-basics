@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         emailtxt.setText("");
         phonetxt.setText("");
         birthdaylbl.setText("Birthday");
+        imageButton.setImageBitmap(null);
     }
 
     public void setValues(String name, String email, String phone,
