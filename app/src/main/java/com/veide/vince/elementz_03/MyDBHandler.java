@@ -11,14 +11,14 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final String TABLE_CONTACT = "contacts";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_EMAIL = "email";
-    private static final String COLUMN_PHONE = "phone";
-    private static final String COLUMN_BIRTHDAY = "birthday";
-    private static final String COLUMN_BIRTHMONTH = "birthmonth";
-    private static final String COLUMN_BIRTHYEAR = "birthyear";
-    private static final String COLUMN_IMAGE = "image";
+    public static final String TABLE_CONTACT = "contacts";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_PHONE = "phone";
+    public static final String COLUMN_BIRTHDAY = "birthday";
+    public static final String COLUMN_BIRTHMONTH = "birthmonth";
+    public static final String COLUMN_BIRTHYEAR = "birthyear";
+    public static final String COLUMN_IMAGE = "image";
 
     public MyDBHandler(Context context, String name,
                        SQLiteDatabase.CursorFactory factory, int version){
@@ -67,12 +67,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return contact;
     }
 
+    public Cursor getAllRows(){
+        String query = "SELECT * FROM " + TABLE_CONTACT;
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACT_TABLE = "CREATE TABLE CONTACTS ( " +
-                "ID INTEGER PRIMARY KEY, " +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_EMAIL + " TEXT, " +
                 COLUMN_PHONE + " TEXT, " +
