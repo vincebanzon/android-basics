@@ -3,6 +3,7 @@ package com.veide.vince.elementz_03;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public EditText nametxt, emailtxt, phonetxt;
     public TextView birthdaylbl;
     public ImageButton imageButton;
+    public ListView contactList;
 
     private String name, email, phone, picture;
     private int year_x, month_x, day_x;
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new MyDBHandler(this, null, null, 1);
         initialize();
+        populateListView();
     }
 
     private void initialize(){
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         birthdaylbl = (TextView) findViewById(R.id.lblBirthday);
         savebtn = (Button) findViewById(R.id.btnSave);
         imageButton = (ImageButton) findViewById(R.id.imageButton);
+        contactList = (ListView) findViewById(R.id.listContact);
 
         // initialize date
         final Calendar cal = Calendar.getInstance();
@@ -96,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         assignValues();
         Contact contact = new Contact(name, email, phone, day_x, month_x, year_x, image);
         dbHandler.addContact(contact);
+        populateListView();
         clearValues();
         Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
@@ -160,6 +167,20 @@ public class MainActivity extends AppCompatActivity {
 
     // converter
     public static Bitmap getImage(byte[] image){
-        return BitmapFactory.decodeByteArray(image, 0,image.length);
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
+
+    // populate contacts to listView
+    public void populateListView(){
+        Cursor cursor = dbHandler.getAllRows();
+        String[] fromFieldNames = new String[] {"_id",
+                MyDBHandler.COLUMN_NAME, MyDBHandler.COLUMN_EMAIL,
+                MyDBHandler.COLUMN_PHONE, MyDBHandler.COLUMN_BIRTHDAY,
+                MyDBHandler.COLUMN_BIRTHMONTH, MyDBHandler.COLUMN_BIRTHYEAR,
+                MyDBHandler.COLUMN_IMAGE};
+        int[] toViewIDs = new int[] {R.id.textViewContactNumber, R.id.textViewName};
+        SimpleCursorAdapter myCursorAdapter;
+        myCursorAdapter = new SimpleCursorAdapter(getBaseContext(), R.layout.contact_layout, cursor, fromFieldNames, toViewIDs, 0);
+        contactList.setAdapter(myCursorAdapter);
     }
 }
